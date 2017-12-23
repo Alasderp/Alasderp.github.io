@@ -1,0 +1,17 @@
+#skillTitle{
+	text-align:center;
+}
+
+#skillsList td h5{
+	text-align:center;
+}
+
+#skillsList td{
+	padding-right:1.5cm;
+}
+
+#skillsList {
+	margin:auto;
+	margin-top:5%;
+}
+

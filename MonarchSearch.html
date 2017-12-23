@@ -1,0 +1,49 @@
+<html>  
+
+<body id="main">
+
+  Search For Kings (or Queens)<br>
+    <input type="text" id="searchBox"><br>
+    <button type="button" onclick="search()">Search</button><br>
+	
+</body>
+	
+<script>
+    function search(){
+        let searchBox = document.getElementById("searchBox");
+        let searchTerm = searchBox.value;
+        let paragraph = document.createElement("p");
+        let pValue = "";
+
+        var requestURL = "https://raw.githubusercontent.com/ewomackQA/JSONDataRepo/master/kings.json";
+        var request = new XMLHttpRequest();
+        request.open('GET', requestURL);
+        request.responseType = 'json'
+        request.send();
+
+        request.onload = function(){
+
+            let requestData = request.response;
+
+            for(let x in requestData){
+
+                    
+                let tempValue = requestData[x];
+				let name = tempValue.nm.toLowerCase();
+
+                if(name.includes(searchTerm.toLowerCase())){
+                    pValue += tempValue.nm + " ";
+                    pValue += tempValue.cty + " "
+                    pValue += tempValue.hse + " ";
+                    pValue += tempValue.yrs + "<br>";
+                }
+
+            }
+         
+            paragraph.innerHTML = pValue;
+            document.getElementById("main").appendChild(paragraph);
+        }
+
+    }
+</script>
+</html>

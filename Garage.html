@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    Add Car:<br>
+    <input type="text" id="addCarBox"><br>
+
+    <button type="button" onclick="addCar()">Add Car</button><br>
+    <button type="button" onclick="showCars()">Display Cars</button><br>
+
+    Add Fault:<br>
+    <input type="text" id="addFaultBox"><br>
+
+    <button type="button" onclick="addFault()">Add Fault</button><br>
+
+    Remove Car:<br>
+    <input type="text" id="deleteCarBox"><br>
+    <button type="button" onclick="deleteCar()">Delete Car</button><br>
+
+
+    <section style="border-style:dotted;border-width:5px;">
+        <p>If you're not an admin please keep out. Thanks</p><br>
+        Input Command:<br>
+        <input type="text" id="commandBox"><br>
+        <button type="button" onclick="inputCommand()">Submit</button><br>
+    </section>
+
+<script>
+
+    var carArray = [];
+
+    function addCar(){
+        let textBox = document.getElementById("addCarBox");
+        carArray.push({"carname":addCarBox.value, "faults":[]});
+    }
+
+    function showCars(){
+        let faults = "";
+        for(let i in carArray){
+            for(let y in carArray[i].faults){
+                faults += carArray[i].faults[y] + "\n";
+            }
+            alert(carArray[i].carname + "\n" + faults);
+        }
+    }
+
+    function addFault(){
+        
+        let textBoxCar = document.getElementById("addCarBox");
+        let textBoxFault = document.getElementById("addFaultBox");
+
+        for(let i in carArray){
+            if(carArray[i].carname === textBoxCar.value){
+                carArray[i].faults.push(textBoxFault.value);
+                break;
+            }   
+        }
+    }
+    
+    function deleteCar(carNm){
+
+        let searchVal = "";
+
+        if(arguments.length === 1){
+            searchVal = carNm
+        }
+        else {
+            searchVal = document.getElementById("deleteCarBox").value;
+        }
+
+        for(let i in carArray){
+
+            if(carArray[i].carname === searchVal){
+                carArray.splice(i, 1);
+                break;
+            }
+        }
+
+    }
+
+    function inputCommand(){
+
+        let textBox = document.getElementById("commandBox");
+
+        let cmd = textBox.value.split(" ");
+
+        if(cmd.length === 0){cmd = [textBox.value];}
+
+        if(cmd[0] === "create"){
+            carArray.push({"carname":cmd[1], "faults":[]});
+        }
+        else if(cmd[0] === "showAll"){
+            showCars();
+        }
+        else if(cmd[0] === "delete"){
+            deleteCar(cmd[1]);
+        }
+        else if(cmd[0] === "addFaults"){
+            for(let x in carArray){
+                if(carArray[x].carname === cmd[1]){
+                    for(let y = 2;y < cmd.length;y++){
+                        carArray[x].faults.push(cmd[y]);
+                    }
+                    break;
+                }   
+        }
+        }
+
+    }
+    
+
+</script>    
+
+</html>
